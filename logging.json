@@ -1,0 +1,80 @@
+{
+    "version": 1,
+    "disable_existing_loggers": false,
+
+    "formatters": {
+        "basic": {
+            "format": "[%(asctime)s.%(msecs)03d %(levelname)-8.8s] %(process)6d %(name)-30.30s %(funcName)-20.20s %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S"
+        },
+        "long": {
+            "format": "[%(asctime)s.%(msecs)03d %(levelname)-8.8s] %(process)6d %(name)-30.30s %(filename)-20.20s line:%(lineno)-4d %(processName)-20.20s %(funcName)-20.20s %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S"
+        }
+    },
+
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "INFO",
+            "formatter": "basic",
+            "stream": "ext://sys.stdout"
+        },
+        "error_fh": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "ERROR",
+            "formatter": "long",
+            "filename": "_errors.log",
+            "maxBytes": 10485760,
+            "backupCount": 10,
+            "encoding": "utf8"
+        },
+        "debug_fh": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "DEBUG",
+            "formatter": "long",
+            "filename": "_debug.log",
+            "maxBytes": 10485760,
+            "backupCount": 10,
+            "encoding": "utf8"
+        }
+    },
+
+    "root": {
+        "level": "INFO",
+        "handlers": ["console", "error_fh"]
+    },
+
+    "loggers": {
+        "__main__": {
+            "level": "INFO",
+            "handlers": ["console", "debug_fh", "error_fh"],
+            "propagate": false
+        },
+        "asyncio": {
+            "level": "WARN",
+            "handlers": ["console"],
+            "propagate": false
+        },
+        "aiohttp": {
+            "level": "WARN",
+            "handlers": ["console"],
+            "propagate": false
+        },
+        "aiodns": {
+            "level": "WARN",
+            "handlers": ["console"],
+            "propagate": false
+        },
+        "hbmqtt.client": {
+            "level": "WARN",
+            "handlers": ["console"],
+            "propagate": false
+        },
+        "transitions.core": {
+            "level": "WARN",
+            "handlers": ["console"],
+            "propagate": false
+        }
+   }
+}
